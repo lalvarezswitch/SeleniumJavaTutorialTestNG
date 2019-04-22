@@ -13,6 +13,7 @@ import org.openqa.selenium.JavascriptExecutor;
 //import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 //import org.openqa.selenium.remote.DesiredCapabilities;
 //import org.testng.Assert;
 import org.testng.ITestResult;
@@ -35,6 +36,12 @@ public class Tests {
 	public void setUp() {
 		//DesiredCapabilities caps = new DesiredCapabilities();
 		System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");
+		//Utilizando headless browser HB
+		/*-HB
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.addArguments("--headless");
+		driver = new ChromeDriver(chromeOptions);
+		*/
 		driver = new ChromeDriver();
 		//driver.manage().window().maximize(); //esto es para maximizar la ventana del navegador
 		//driver.manage().window().fullscreen(); //esto es para poner en fullscreen la ventana del navegador
@@ -59,7 +66,7 @@ public class Tests {
 		//helper.sleepSeconds(4);
 	}
 	
-	@Test
+	@Test(description = "Login Incorrecto")
 	public void loginIncorrecto() {
 		WebDriverManager.setWindowSize(driver, "maximized");
 		//Aca estoy manejando los tabs del navegador
@@ -88,7 +95,7 @@ public class Tests {
 		//Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/p/font/b")).getText().contains("Welcome back to"));
 	}
 	
-	@Test
+	@Test(description = "Login con credenciales correctas")
 	public void login() {
 		//WebDriverManager.setWindowSize(driver, "fullscreen");
 		//****codigo A****
@@ -114,7 +121,7 @@ public class Tests {
 		//Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font")).getText().contains("Flight Finder to search"));
 	}
 	
-	@Test
+	@Test(description = "Seleccionar puerto Londres")
 	public void pruebaTres() {
 		//WebDriverManager.setWindowSize(driver,400,400);
 		PageLogin pageLogin = new PageLogin(driver);
@@ -125,14 +132,21 @@ public class Tests {
 		pageReservation.selectToPort("London");
 	}
 	
-	@Test
+	@Test(description = "Verificar la cantidad de ampos que tiene el login")
 	public void pruebaCantidadDeCampos() {
 		PageLogin pageLogin = new PageLogin(driver);
 		pageLogin.verifyFields();
 	}
 	
+	@Test(description = "Verificar título correcto en el login")
+	public void pruebaTituloEnUsuario() {
+		PageLogin pageLogin = new PageLogin(driver);
+		pageLogin.putTitleInUserField();
+	}
+	
 	@AfterMethod
 	public void tearDown(ITestResult result) {
+		System.out.println("El test "+ result.getMethod().getDescription()+ " resultó"+result.getStatus());
 		if(!result.isSuccess()) {
 			Screenshooter.takeScreenshot("Error", driver);
 			//todo esto pasa a ser manejado en la clase Screenshooter

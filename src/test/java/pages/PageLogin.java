@@ -22,12 +22,13 @@ public class PageLogin {
 	private WebDriver driver;
 	
 	@FindBy(how=How.NAME,using="userName") //utilizando PageFactory, aqui se busca ya el elemento.
+	//@FindBy(name="userName") //también se puede utilizar así, pero la de arriba es más explícita
 	private WebElement userFieldElement;
 	//private By userField;
 	@FindBy(how=How.NAME,using="password") //utilizando PageFactory
 	private WebElement passwordFieldElement;
 	//private By passwordField;
-	@FindBy(how=How.NAME,using="loginButton") //utilizando PageFactory
+	@FindBy(how=How.NAME,using="login") //utilizando PageFactory
 	private WebElement loginButtonElement;
 	//private By loginButton;
 	@FindBy(how=How.TAG_NAME,using="input") //utilizando Pagefactory
@@ -74,9 +75,15 @@ public class PageLogin {
 	
 	public void verifyFields() {
 		//List<WebElement> loginFields = driver.findElements(fields); //al utilizar el Page factory ya no hace falta
-		System.out.println(fields.size());
+		//System.out.println(fields.size());
 		Assert.assertTrue(fields.size()==5);
 		//System.out.println(loginFields.size()); //al utilizar el Page factory ya no hace falta
 		//Assert.assertTrue(loginFields.size()==5);  //al utilizar el Page factory ya no hace falta
+	}
+	
+	public void putTitleInUserField() {
+		String title = driver.getTitle();
+		userFieldElement.sendKeys(title);
+		Assert.assertEquals("Welcome: Mercury Tours", title);
 	}
 }
