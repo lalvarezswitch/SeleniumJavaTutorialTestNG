@@ -21,21 +21,25 @@ import org.testng.Assert;
 public class PageLogin {
 	private WebDriver driver;
 	
-	@FindBy(how=How.NAME,using="userName") //utilizando PageFactory
+	@FindBy(how=How.NAME,using="userName") //utilizando PageFactory, aqui se busca ya el elemento.
 	private WebElement userFieldElement;
 	//private By userField;
 	@FindBy(how=How.NAME,using="password") //utilizando PageFactory
 	private WebElement passwordFieldElement;
 	//private By passwordField;
-	private By loginButton;
-	private By fields;
+	@FindBy(how=How.NAME,using="loginButton") //utilizando PageFactory
+	private WebElement loginButtonElement;
+	//private By loginButton;
+	@FindBy(how=How.TAG_NAME,using="input") //utilizando Pagefactory
+	private List<WebElement> fields;
+	//private By fields;
 	public PageLogin(WebDriver driver) {
 		this.driver = driver;
 		//userField = By.name("userName"); //Se elimina el utilizar PageFactory
 		//passwordField = By.name("password"); //Se elimina el utilizar PageFactory
-		loginButton = By.name("login");
-		fields = By.tagName("input");
-		PageFactory.initElements(driver, this); //utliizando PageFactory
+		//loginButton = By.name("login"); //Se elimina el utilizar PageFactory
+		//fields = By.tagName("input"); /Se elimina el utilizar PageFactory
+		PageFactory.initElements(driver, this); //utilizando PageFactory
 	}
 	
 	public void login(String user, String pass) {
@@ -43,7 +47,8 @@ public class PageLogin {
 		//driver.findElement(userField).sendKeys(user);
 		passwordFieldElement.sendKeys(pass); //utilizando PageFactory
 		//driver.findElement(passwordField).sendKeys(pass);
-		driver.findElement(loginButton).click();
+		loginButtonElement.click();
+		//driver.findElement(loginButton).click(); 
 		//Para poder exportar imagenes del test
 		/*File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		try {
@@ -59,15 +64,19 @@ public class PageLogin {
 	}
 	
 	public void fields_login(String user, String pass) {
-		List<WebElement> loginFields = driver.findElements(fields);
-		loginFields.get(1).sendKeys(user);
-		loginFields.get(2).sendKeys(pass);
+		//List<WebElement> loginFields = driver.findElements(fields); //al utilizar el Page factory ya no hace falta
+		fields.get(1).sendKeys(user);
+		fields.get(2).sendKeys(pass);
+		//loginFields.get(1).sendKeys(user); //al utilizar el Page factory ya no hace falta
+		//loginFields.get(2).sendKeys(pass); //al utilizar el Page factory ya no hace falta
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	public void verifyFields() {
-		List<WebElement> loginFields = driver.findElements(fields);
-		System.out.println(loginFields.size());
-		Assert.assertTrue(loginFields.size()==5);
+		//List<WebElement> loginFields = driver.findElements(fields); //al utilizar el Page factory ya no hace falta
+		System.out.println(fields.size());
+		Assert.assertTrue(fields.size()==5);
+		//System.out.println(loginFields.size()); //al utilizar el Page factory ya no hace falta
+		//Assert.assertTrue(loginFields.size()==5);  //al utilizar el Page factory ya no hace falta
 	}
 }
