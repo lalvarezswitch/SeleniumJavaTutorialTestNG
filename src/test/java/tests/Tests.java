@@ -44,10 +44,11 @@ public class Tests {
 		}*/
 		//driver.manage().window().setPosition(new Point(800,200)); //posicionando la ventana del navegador
 		driver.navigate().to("http://newtours.demoaut.com/");
-		JavascriptExecutor javaScriptExecutor = (JavascriptExecutor)driver;
-		String googleWindow = "window.open('http://www.google.com')";
-		javaScriptExecutor.executeScript(googleWindow);
-		tabs = new ArrayList<String> (driver.getWindowHandles());
+		//Este codigo de abajo permite abrir otra ventana en el navegador
+		//JavascriptExecutor javaScriptExecutor = (JavascriptExecutor)driver;
+		//String googleWindow = "window.open('http://www.google.com')";
+		//javaScriptExecutor.executeScript(googleWindow);
+		//tabs = new ArrayList<String> (driver.getWindowHandles());
 		/*try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -61,8 +62,9 @@ public class Tests {
 	@Test
 	public void loginIncorrecto() {
 		WebDriverManager.setWindowSize(driver, "maximized");
-		driver.switchTo().window(tabs.get(1)).navigate().to("http://www.youtube.com/user/Draculinio");
-		driver.switchTo().window(tabs.get(0));
+		//Aca estoy manejando los tabs del navegador
+		//driver.switchTo().window(tabs.get(1)).navigate().to("http://www.youtube.com/user/Draculinio");
+		//driver.switchTo().window(tabs.get(0));
 		//***código A****
 		PageLogin pageLogin = new PageLogin(driver);
 		PageLogon pageLogon =  new PageLogon(driver);
@@ -88,7 +90,7 @@ public class Tests {
 	
 	@Test
 	public void login() {
-		WebDriverManager.setWindowSize(driver, "fullscreen");
+		//WebDriverManager.setWindowSize(driver, "fullscreen");
 		//****codigo A****
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation =  new PageReservation(driver);
@@ -114,7 +116,7 @@ public class Tests {
 	
 	@Test
 	public void pruebaTres() {
-		WebDriverManager.setWindowSize(driver,400,400);
+		//WebDriverManager.setWindowSize(driver,400,400);
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation =  new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
@@ -141,9 +143,9 @@ public class Tests {
 				// TODO: handle exception
 				e.printStackTrace();*/
 			}
-		//driver.close();
-		driver.switchTo().window(tabs.get(1)).close();
-		driver.switchTo().window(tabs.get(0)).close();
+		driver.close();
+		//driver.switchTo().window(tabs.get(1)).close();
+		//driver.switchTo().window(tabs.get(0)).close();
 	}
 
 }

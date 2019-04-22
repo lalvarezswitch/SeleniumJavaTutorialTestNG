@@ -11,27 +11,38 @@ import org.openqa.selenium.By;
 //import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 //import helpers.Helpers;
 
 public class PageLogin {
 	private WebDriver driver;
-	private By userField;
-	private By passwordField;
+	
+	@FindBy(how=How.NAME,using="userName") //utilizando PageFactory
+	private WebElement userFieldElement;
+	//private By userField;
+	@FindBy(how=How.NAME,using="password") //utilizando PageFactory
+	private WebElement passwordFieldElement;
+	//private By passwordField;
 	private By loginButton;
 	private By fields;
 	public PageLogin(WebDriver driver) {
 		this.driver = driver;
-		userField = By.name("userName");
-		passwordField = By.name("password");
+		//userField = By.name("userName"); //Se elimina el utilizar PageFactory
+		//passwordField = By.name("password"); //Se elimina el utilizar PageFactory
 		loginButton = By.name("login");
 		fields = By.tagName("input");
+		PageFactory.initElements(driver, this); //utliizando PageFactory
 	}
 	
 	public void login(String user, String pass) {
-		driver.findElement(userField).sendKeys(user);
-		driver.findElement(passwordField).sendKeys(pass);
+		userFieldElement.sendKeys(user); //utilizando PageFactory		
+		//driver.findElement(userField).sendKeys(user);
+		passwordFieldElement.sendKeys(pass); //utilizando PageFactory
+		//driver.findElement(passwordField).sendKeys(pass);
 		driver.findElement(loginButton).click();
 		//Para poder exportar imagenes del test
 		/*File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
