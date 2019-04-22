@@ -35,13 +35,23 @@ public class Tests {
 	@BeforeMethod
 	public void setUp() {
 		//DesiredCapabilities caps = new DesiredCapabilities();
-		System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");
+		String driverByOS = "";
+		if (System.getProperty("os.name").equals("Windows 10")) {
+			driverByOS = "Drivers/chromedriver.exe";
+		} 
+		else {
+			driverByOS = "Drivers/chromedriver";
+		}
+		//para saber en qué sistema Operativo estamos corriendo el proyecto.
+		System.out.println(System.getProperty("os.name"));
+		
+		System.setProperty("webdriver.chrome.driver", driverByOS);
 		//Utilizando headless browser HB
 		/*-HB
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--headless");
 		driver = new ChromeDriver(chromeOptions);
-		*/
+		HB-*/
 		driver = new ChromeDriver();
 		//driver.manage().window().maximize(); //esto es para maximizar la ventana del navegador
 		//driver.manage().window().fullscreen(); //esto es para poner en fullscreen la ventana del navegador
@@ -95,7 +105,7 @@ public class Tests {
 		//Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/p/font/b")).getText().contains("Welcome back to"));
 	}
 	
-	@Test(description = "Login con credenciales correctas")
+	@Test(description = "Login con credenciales correctas", enabled = false)
 	public void login() {
 		//WebDriverManager.setWindowSize(driver, "fullscreen");
 		//****codigo A****
@@ -121,7 +131,7 @@ public class Tests {
 		//Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font")).getText().contains("Flight Finder to search"));
 	}
 	
-	@Test(description = "Seleccionar puerto Londres")
+	@Test(description = "Seleccionar puerto Londres", enabled = false)
 	public void pruebaTres() {
 		//WebDriverManager.setWindowSize(driver,400,400);
 		PageLogin pageLogin = new PageLogin(driver);
@@ -132,13 +142,13 @@ public class Tests {
 		pageReservation.selectToPort("London");
 	}
 	
-	@Test(description = "Verificar la cantidad de ampos que tiene el login")
+	@Test(description = "Verificar la cantidad de ampos que tiene el login", enabled = false)
 	public void pruebaCantidadDeCampos() {
 		PageLogin pageLogin = new PageLogin(driver);
 		pageLogin.verifyFields();
 	}
 	
-	@Test(description = "Verificar título correcto en el login")
+	@Test(description = "Verificar título correcto en el login", enabled = false)
 	public void pruebaTituloEnUsuario() {
 		PageLogin pageLogin = new PageLogin(driver);
 		pageLogin.putTitleInUserField();
